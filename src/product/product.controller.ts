@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { ProductDocument } from './product.schema';
 import { ProductService } from './product.service';
 
 @Controller('product')
 export class ProductController {
-    constructor(private productService: ProductService){
+    constructor(private productService: ProductService) {
 
     }
     @Post()
@@ -18,18 +19,19 @@ export class ProductController {
     }
     @Get()
     findAllProducts(
-        ): Promise<ProductDocument[]> {
-            return this.productService.findAll();
-        }
+    ): Promise<ProductDocument[]> {
+        return this.productService.findAll();
+    }
+    @UseGuards(JwtGuard)
     @Get(':id')
-    findUnique(    
+    findUnique(
         @Param('id') id: string
     ): Promise<ProductDocument> {
         return this.productService.find(id);
     }
-    
+
     @Patch(':id')
-    updateProduct(    
+    updateProduct(
         @Param('id') id: string,
         @Body('name') name: string,
         @Body('price') price: number,
@@ -40,8 +42,8 @@ export class ProductController {
     }
     @Delete(':id')
     deleteProduct(
-        @Param('id') id : string
-    ){
+        @Param('id') id: string
+    ) {
         return this.productService.delete(id)
     }
 
