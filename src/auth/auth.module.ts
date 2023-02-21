@@ -7,12 +7,17 @@ import { JwtGuard } from './guards/jwt.guard';
 import { JwtStrategy } from './guards/jwt.strategy';
 
 @Module({
-  imports: [UserModule, JwtModule.registerAsync({useFactory: () => ({
-    // pass .env
-    secret: 'secret',
-    signOptions: { expiresIn: '3600s'}
-  })})],
+  imports: [
+    UserModule,
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        // pass .env
+        secret: 'secret',
+        signOptions: { expiresIn: '3600s' },
+      }),
+    }),
+  ],
   controllers: [AuthController],
-  providers: [AuthService, JwtGuard, JwtStrategy]
+  providers: [AuthService, JwtGuard, JwtStrategy],
 })
 export class AuthModule {}
