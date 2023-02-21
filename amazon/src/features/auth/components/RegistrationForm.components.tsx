@@ -6,15 +6,18 @@ import {
   Typography,
   Button,
   Divider,
+  CircularProgress,
 } from '@mui/material';
-import { FC, FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { FC, FormEvent, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import useInput from '../../../hooks/input/use-input';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux/hooks';
 import { validateEmail } from '../../../shared/utils/validation/email';
 import {
   validateNameLength,
   validatePasswordLength,
 } from '../../../shared/utils/validation/length';
+import { register, reset } from '../authSlice';
 import { NewUser } from '../models/NewUser';
 const RegistrationFormComponents: FC = () => {
   const {
@@ -45,15 +48,18 @@ const RegistrationFormComponents: FC = () => {
     inputBlurHandler: confirmPasswordBlurHandler,
     clearHandler: confirmPasswordClearHandler,
   } = useInput(validatePasswordLength);
+  const dispatch = useAppDispatch();
+  const { isSuccess, isLoading } = useAppSelector((state) => state.auth);
+  const navigate = useNavigate();
+
   const clearForm = () => {
     nameClearHandler();
     emailClearHandler();
     passwordClearHandler();
     confirmPasswordClearHandler();
-  }
+  };
   const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Clicked');
     const errors = [
       nameHasError,
       emailHasError,
@@ -74,9 +80,18 @@ const RegistrationFormComponents: FC = () => {
       email,
       password,
     };
-    console.log('New User', newUser)
-    clearForm();
+    dispatch(register(newUser));
   };
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(reset());
+      clearForm();
+      navigate('/signin');
+    }
+  }, [isSuccess]);
+  if (isLoading)
+    return <CircularProgress sx={{ marginTop: '64px' }} color="primary" />;
+
   return (
     <Box
       sx={{
