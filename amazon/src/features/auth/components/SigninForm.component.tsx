@@ -54,7 +54,6 @@ const SigninFormComponent: FC = () => {
   }, [isSuccess, dispatch]);
 
   useEffect(() => {
-    
     if (!isAuthenticated) return;
     navigate('/');
   }, [isAuthenticated]);
@@ -136,10 +135,13 @@ const SigninFormComponent: FC = () => {
               style={{
                 marginTop: '16px',
                 height: '31px',
-                backgroundColor: '#f0c14b',
+                backgroundColor: !validatePasswordLength(password) || !validateEmail(email) ? '#888' :  '#f0c14b',
                 borderColor: '#a88734 #9c7e31 #846a29',
                 textTransform: 'none',
               }}
+              disabled={
+                !validatePasswordLength(password) || !validateEmail(email)
+              }
               type="submit"
             >
               Sign-in
