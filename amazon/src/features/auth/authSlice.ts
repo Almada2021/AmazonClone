@@ -87,7 +87,7 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.user = action.payload;
       })
-      .addCase(register.rejected, (state, action) => {
+      .addCase(register.rejected, (state) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
@@ -109,7 +109,7 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.isAuthenticated = action.payload;
       })
-      .addCase(verifyJwt.rejected, (state, action) => {
+      .addCase(verifyJwt.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
         state.isAuthenticated = false;
@@ -125,7 +125,7 @@ export const authSlice = createSlice({
         state.isAuthenticated = true;
         state.isSuccess = true;
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(login.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;

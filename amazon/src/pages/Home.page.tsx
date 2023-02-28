@@ -1,26 +1,37 @@
-import { Link } from 'react-router-dom';
-import { logout, selectedUser } from '../features/auth/authSlice';
-import { useAppDispatch } from '../hooks/redux/hooks';
-import { useAppSelector } from '../hooks/redux/hooks';
+import { useEffect } from 'react';
+
+import HeaderComponent from '../features/products/components/Header.component';
+import ProductComponent from '../features/products/components/Product.component';
+import { getProducts } from '../features/products/productSlice';
+import { useAppDispatch, useAppSelector } from '../hooks/redux/hooks';
 
 const HomePage = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector(selectedUser);
-  const auth = useAppSelector((state) => state.auth);
-  const logoutHandler = async () => {
-    dispatch(logout());
-  };
-  console.log(1,user)
-  console.log(2,auth)
+
+  const { products } = useAppSelector((state) => state.product);
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
+
   return (
     <div>
-      <h1>Home Page</h1>
-      <a
-        onClick={logoutHandler}
-        style={{ backgroundColor: 'yellow', cursor: 'pointer' }}
-      >logout</a>
-      <Link to="/signin">Sign-In</Link>
-      { user?.email }
+      <HeaderComponent />
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '48px',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: '48px',
+        }}
+      >
+        {products.length > 0 &&
+          products.map((product) => (
+            <ProductComponent key={product._id} product={product} />
+          ))}
+      </div>
     </div>
   );
 };
