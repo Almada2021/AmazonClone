@@ -117,6 +117,8 @@ export const authSlice = createSlice({
       // LOGIN
       .addCase(login.pending, (state) => {
         state.isLoading = true;
+        state.jwt = null;
+        state.user = null;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.jwt = action.payload.jwt;
@@ -128,9 +130,7 @@ export const authSlice = createSlice({
       .addCase(login.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
-        state.user = null;
-        state.jwt = null;
-        state.isAuthenticated = false;
+
       });
   },
 });

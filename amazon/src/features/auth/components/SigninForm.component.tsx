@@ -41,7 +41,7 @@ const SigninFormComponent: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { isLoading, isSuccess, isAuthenticated, user } = useAppSelector(
+  const { isLoading, isSuccess, isAuthenticated } = useAppSelector(
     (state) => state.auth,
   );
 
@@ -135,7 +135,10 @@ const SigninFormComponent: FC = () => {
               style={{
                 marginTop: '16px',
                 height: '31px',
-                backgroundColor: !validatePasswordLength(password) || !validateEmail(email) ? '#888' :  '#f0c14b',
+                backgroundColor:
+                  !validatePasswordLength(password) || !validateEmail(email)
+                    ? '#888'
+                    : '#f0c14b',
                 borderColor: '#a88734 #9c7e31 #846a29',
                 textTransform: 'none',
               }}
@@ -151,7 +154,7 @@ const SigninFormComponent: FC = () => {
 
         <div style={{ marginTop: '30px' }}>
           <small>
-            <span>By continuing an account, you agree to Amazon's</span>
+            <span>By continuing an account, you agree to Amazon&apos;s</span>
             <a href="#" style={{ textDecoration: 'none' }}>
               {' '}
               Conditions of use{' '}
@@ -165,7 +168,7 @@ const SigninFormComponent: FC = () => {
         <Divider sx={{ marginTop: '36px', marginBotton: '36px' }} />
         <small>
           <div style={{ marginTop: '16px' }}> </div>
-          You don't have an account?{' '}
+          You don&apos;t have an account
           <Link
             to="/register"
             style={{ textDecoration: 'none', color: '#0000ee' }}

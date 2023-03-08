@@ -64,7 +64,7 @@ const RegistrationFormComponents: FC = () => {
       nameHasError,
       emailHasError,
       passwordHasError,
-      confirmPassword,
+      confirmPasswordHasError,
     ].every(Boolean);
     const lengthConditions = [
       name.length === 0,
@@ -216,7 +216,7 @@ const RegistrationFormComponents: FC = () => {
       </Divider>
       <div style={{ marginTop: '30px' }}>
         <small>
-          <span>By creating an account, you agree to Amazon's</span>
+          <span>By creating an account, you agree to Amazon&apos;s</span>
           <a href="#" style={{ textDecoration: 'none' }}>
             {' '}
             Conditions of use{' '}
